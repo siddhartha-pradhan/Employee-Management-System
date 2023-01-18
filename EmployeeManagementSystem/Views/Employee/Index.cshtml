@@ -1,0 +1,148 @@
+﻿@using EmployeeManagementSystem.Models
+
+@model Employee
+
+@{
+    ViewData["Title"] = "Employee Index";
+}
+
+<div class="container row" id="partial">
+
+    <div class="col-md-5 p-0">
+        <h2 class="mb-3">Employees Record</h2>
+    </div>
+
+    <div class="col-md-7 d-flex justify-content-end p-0">
+        <button type="button" class="btn btn-primary me-4" onclick="bulkExcelEntry();">
+            Bulk Import
+        </button>
+        <button type="button" class="btn btn-primary" id="toggleButton" data-bs-toggle="modal" data-bs-target="#exampleModal" onclick="clearTextBox();">
+            Add Employee
+        </button>
+    </div>
+
+    <br />
+    <br />
+
+    <form method="get" class="p-0 mt-2 mb-2">
+        <div class="form-group">
+            <div class="row g-3">
+                <div class="col-auto p-0">
+                    <label class="m-2">Search by Name</label>
+                </div>
+                <div class="col-auto">
+                    <input type="text" class="form-control mb-3 me-4" id="searchString" value="" placeholder="Name of the Employee" />
+                </div>
+                <div class="col-auto">
+                    <input type="submit" value="Search" class="btn btn-primary ms-3 me-3" id="search" onclick="loadSearchData()" />
+                </div>
+                <div class="col-auto" id="fullList">
+                    <input type="submit" value="Back to list" class="btn btn-primary me-3" />
+                </div>
+            </div>
+        </div>
+    </form>
+
+    <table class="table table-bordered table-hover mt-2">
+        <thead>
+            <tr>
+                <th>Name of the Employee</th>
+                <th>Age</th>
+                <th>Email</th>
+                <th>Department</th>
+                <th>Designation</th>
+                <th>Hired Date</th>
+                <th>Last Modified</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody class="tbody"></tbody>
+    </table>
+
+    <div class="d-grid gap-2 d-md-block mt-2 p-0">
+        <a href="/Report" target="_blank" type="button" class="btn btn-primary m-1">Export to PDF</a>
+        <a href="/Export" target="_blank" type="button" class="btn btn-primary">Export to Excel</a>
+    </div>
+
+</div>
+
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h4 class="modal-title" id="myModalLabel">
+                    <span>Add </span>Employee
+                </h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+
+            <div class="modal-body">
+                <form>
+                    <div class="form-group" id="empId">
+                        <label class="mb-2">Employee ID</label>
+                        <input type="text" class="form-control mb-3" id="Id" disabled="disabled" />
+                    </div>
+                    <div class="form-group">
+                        <label class="mb-2">Name</label>
+                        <input class="form-control mb-3" id="Name" placeholder="Name of the Employee" />
+                    </div>
+                    <div class="form-group">
+                        <label class="mb-2">Age</label>
+                        <input class="form-control mb-3" id="Age" placeholder="Age" />
+                    </div>
+                    <div class="form-group">
+                        <label class="mb-2">Email</label>
+                        <input type="text" class="form-control mb-3" id="Email" placeholder="Email Address" />
+                    </div>
+                    <div class="form-group">
+                        <label class="mb-2">Department</label>
+                        <select type="text" class="form-select form-control mb-3" id="Department">
+                            <option value="" disabled selected>Select a department</option>
+                            <option>AI</option>
+                            <option>Angular</option>
+                            <option>Database</option>
+                            <option>.NET</option>
+                            <option>React</option>
+                            <option>Support</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="mb-2">Designation</label>
+                        <input type="text" class="form-control mb-3" id="Designation" placeholder="Position" />
+                    </div>
+                    <div class="form-group">
+                        <label class="mb-2">Hired Date</label>
+                        <input type="date" class="form-control" id="HiredDate" />
+                    </div>
+                </form>
+            </div>
+
+            <div class="modal-footer mt-2">
+                <button type="button" class="btn btn-primary" id="btnUpdate" onclick="updateEmployee();">Update</button>
+                <button type="button" class="btn btn-primary" id="btnAdd" onclick="addEmployee();">Add</button>
+                <button type="button" class="btn btn-default" data-bs-dismiss="modal">Close</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+        <script src="~/lib/jquery/dist/jquery.min.js"></script>
+        <script src="~/js/employees.js"></script>
+        <script>
+            $(document).ready(function () {
+                $('#fullList').hide();
+                $('#toggleButton').click(function () {
+                    $('#btnUpdate').hide();
+                    $('#btnAdd').show();
+                    $('#empId').hide();
+                });
+            });
+            $('#search').click(function () {
+                $('#fullList').show();
+            });
+        </script>
+}

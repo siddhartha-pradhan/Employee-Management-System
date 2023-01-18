@@ -1,0 +1,45 @@
+﻿
+@{
+    ViewData["Title"] = "Bulk Data Entry";
+    Layout = null;
+}
+
+<h2 class="mb-3 p-0">Bulk Data Entry</h2>
+
+<form asp-controller="Employee" method="get" class="p-0 mt-2 mb-2">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4 p-0 me-2">
+                <input type="file" id="excelFile" name="files" class="form-control" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" />
+            </div>
+            <div class="col-md-1">
+                <input type="button" name="Upload" value="Upload" id="btnUpload" onclick="addData();" class="btn btn-primary" />
+            </div>
+            <div class="col-md-1">
+                <input type="submit" name="Export" value="Sample Sheet" id="btnExport" class="btn btn-primary" asp-action="Export" />
+            </div>
+        </div>
+        <div class="clearfix">&nbsp;</div>
+    </div>
+</form>
+
+<table class="table table-bordered table-hover mt-2">
+    <thead>
+        <tr>
+            <th>Name of the Employee</th>
+            <th>Age</th>
+            <th>Email</th>
+            <th>Department</th>
+            <th>Designation</th>
+            <th>Hired Date</th>
+        </tr>
+    </thead>
+    <tbody id="dataOutput"></tbody>
+</table>
+
+<div class="mt-3 btn btn-primary" style="display: none; width: 10%; height: auto" id="push" onclick="importEmployees()">Push Data</div>
+
+<script src="~/excel/dist/xls.core.min.js"></script>
+<script src="~/excel/dist/xlsx.core.min.js"></script>
+<script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
+<script src="https://code.jquery.com/ui/1.11.1/jquery-ui.min.js"></script>
