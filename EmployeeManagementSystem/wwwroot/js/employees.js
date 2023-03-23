@@ -99,8 +99,6 @@ function addEmployee() {
     $.ajax({
         url: "/Employee/Add",
         method: "POST",
-        //contentType: "application/json; charset=utf-8",
-        //dataType: "json",
         data: { employee: employeeObject },
         success: function (result) {
             loadData();
@@ -143,12 +141,6 @@ function updateEmployee() {
     };
 
     $.ajax({
-        //url: "/Employee/UpdateEmployee",
-        //data: JSON.stringify(empObj),
-        //type: "POST",
-        //contentType: "application/json; charset=UTF-8",
-        //dataType: "json",
-
         url: "/Employee/Update",
         method: "POST",
         data: { employee: employeeObject },
@@ -208,9 +200,6 @@ function clearTextBox() {
 function validate() {
     var isValid = true;
 
-    //var nameRegex = /^[a-zA-Z]+$/;
-    //var ageRegex = /^[0-9]+$/;
-
     if ($("#Name").val().trim() == "") {
         $("#Name").css('border-color', 'Red');
         isValid = false;
@@ -254,52 +243,11 @@ function validate() {
     return isValid;
 }
 
-//function loadSearchData() {
-//    var searchString = $('#searchString').val().trim();
-
-//    $.ajax({
-//        url: "/Employee/Search",
-//        data: { searchString: searchString },
-//        method: "GET",
-//        contentType: "application/json; charset=utf-8",
-//        dataType: "json",
-//        success: function (result) {
-//            var html = '';
-//            $.each(result, function (key, item) {
-//                console.log(item);
-//                html += '<tr>';
-//                html += '<td>' + item.name + '</td>';
-//                html += '<td>' + item.age + '</td>';
-//                html += '<td>' + item.email + '</td>';
-//                html += '<td>' + item.department + '</td>';
-//                html += '<td>' + item.designation + '</td>';
-//                html += '<td>' + item.hiredDate + '</td>';
-//                if (!item.modifiedDate) {
-//                    html += '<td> Not Modified Yet </td>';
-//                }
-//                else {
-//                    html += '<td>' + item.modifiedDate + '</td >';
-//                }
-//                html += '<td> <a href="#" class="btn btn-primary" onclick="return getByID(' + item.id + ')"> Update </a> <a href="#" class="btn btn-danger" onclick="deleteEmployee(' + item.id + ')"> Delete</a> </td>';
-//                html += '</tr>';
-//            });
-//            $('.tbody').html(html);
-//        },
-//        error: function (errorMessage) {
-//            alert(errorMessage.responseText);
-//        }
-//    });
-//}
-
 function bulkExcelEntry() {
     $.ajax({
         url: "/Employee/Excel",
         method: "GET",
-        //contentType: "application/json; charset=utf-8",
-        //dataType: "json",
         success: function (result) {
-            // window.history.pushState("Import", "Import", "/Employee/Import");
-            // window.location = '/Employee/Import';
             $('#partial').html(result);
 
         },
@@ -394,27 +342,7 @@ function populateData(jsonData) {
         html += '<td>' + jsonData[i]["Designation"] + '</td>';
         html += '<td>' + jsonData[i]["Hired Date"] + '</td>';
         html += '</tr>';
-
-        //empObject.push(
-        //    {
-        //        "Name": data[i]["Employee Name"],
-        //        "Department": data[i]["Employee Department"],
-        //        "Position": data[i]["Employee Position"],
-        //        "Salary": data[i]["Employee Salary"]
-        //    }
-        //);
     }
-
-    //$.each(jsonData, function (key, item) {
-    //    html += '<tr>';
-    //    html += '<td>' + item.Name + '</td>';
-    //    html += '<td>' + item.Age + '</td>';
-    //    html += '<td>' + item.Email + '</td>';
-    //    html += '<td>' + item.Department + '</td>';
-    //    html += '<td>' + item.Designation + '</td>';
-    //    html += '<td>' + item.HiredDate + '</td>';
-    //    html += '</tr>';
-    //});
 
     $('#dataOutput').html(html);
 
